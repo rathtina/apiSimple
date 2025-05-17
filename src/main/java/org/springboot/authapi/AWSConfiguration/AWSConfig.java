@@ -1,5 +1,6 @@
 package org.springboot.authapi.AWSConfiguration;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,13 @@ public class AWSConfig {
 
     @Value("${aws.region}")
     private String region;
+
+    @PostConstruct
+    public void test() {
+        System.out.println("✅ Access Key: " + accessKey);
+        System.out.println("✅ Secret Key: " + (secretKey != null ? "LOADED" : "MISSING"));
+        System.out.println("✅ Region: " + region);
+    }
 
     @Bean
     public S3Client s3client(){
