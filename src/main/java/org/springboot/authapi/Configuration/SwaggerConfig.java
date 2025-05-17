@@ -16,7 +16,7 @@ public class SwaggerConfig {
                         .title("Professional Spring Boot API")
                         .version("1.0")
                         .description("This is a professional-grade documentation for testing Spring Boot endpoints.")
-                        .contact(new Contact().name("API Support").email("support@example.com"))
+                        .contact(new Contact().name("API Support").email("ornrathtina123@gmail.com"))
                         .license(new License().name("Apache 2.0").url("http://springdoc.org")));
     }
 }
