@@ -36,19 +36,6 @@ public class AuthenticationController {
 
     @Autowired private TokenBlacklistService tokenBlacklistService;
 
-    @Operation(summary = "Get product details", description = "Fetch details of a product by its ID.")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200", description = "Product found",
-                    content = @Content(
-                            schema = @Schema(implementation = Product.class)
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Product not found"
-            )
-    })
 
 //    @PostMapping("/signup")
 //    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
