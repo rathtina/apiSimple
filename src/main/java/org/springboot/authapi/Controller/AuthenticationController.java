@@ -1,17 +1,10 @@
 package org.springboot.authapi.Controller;
-
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springboot.authapi.Dto.LoginUserDto;
 import org.springboot.authapi.Dto.RegisterUserDto;
 import org.springboot.authapi.Dto.userDto;
-import org.springboot.authapi.Enities.Product;
+
 import org.springboot.authapi.Enities.User;
 import org.springboot.authapi.Repository.UserRepository;
-import org.springboot.authapi.ResponseEnities.LoginResponse;
 import org.springboot.authapi.Service.AuthenticationService;
 import org.springboot.authapi.Service.JwtService;
 import org.springboot.authapi.Service.TokenBlacklistService;
