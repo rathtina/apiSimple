@@ -1,8 +1,14 @@
 package org.springboot.authapi.Controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springboot.authapi.Dto.LoginUserDto;
 import org.springboot.authapi.Dto.RegisterUserDto;
 import org.springboot.authapi.Dto.userDto;
+import org.springboot.authapi.Enities.Product;
 import org.springboot.authapi.Enities.User;
 import org.springboot.authapi.Repository.UserRepository;
 import org.springboot.authapi.ResponseEnities.LoginResponse;
@@ -30,20 +36,48 @@ public class AuthenticationController {
 
     @Autowired private TokenBlacklistService tokenBlacklistService;
 
+    @Operation(summary = "Get product details", description = "Fetch details of a product by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200", description = "Product found",
+                    content = @Content(
+                            schema = @Schema(implementation = Product.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Product not found"
+            )
+    })
+
+//    @PostMapping("/signup")
+//    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
+//        User registerUser=authenticationService.signup(registerUserDto);
+//        return ResponseEntity.ok(registerUser);
+//    }
+
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-        User registerUser=authenticationService.signup(registerUserDto);
-        return ResponseEntity.ok(registerUser);
+    public ResponseEntity<String> register(@RequestBody RegisterUserDto registerUserDto) {
+        authenticationService.signup(registerUserDto);
+        return ResponseEntity.ok("User registered successfully");
     }
+
+//    @PostMapping("/login")
+//    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
+//        User authenticateUser = authenticationService.authenticate(loginUserDto);
+//
+//        String jwtToken=jwtService.generateToken(authenticateUser);
+//        LoginResponse loginResponse= new LoginResponse().setToken(jwtToken).setFullName(authenticateUser.getFullName());
+//        return ResponseEntity.ok(loginResponse);
+//    }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
+    public ResponseEntity<String> authenticate(@RequestBody LoginUserDto loginUserDto) {
         User authenticateUser = authenticationService.authenticate(loginUserDto);
-
-        String jwtToken=jwtService.generateToken(authenticateUser);
-        LoginResponse loginResponse= new LoginResponse().setToken(jwtToken).setFullName(authenticateUser.getFullName());
-        return ResponseEntity.ok(loginResponse);
+        String jwtToken = jwtService.generateToken(authenticateUser);
+        return ResponseEntity.ok(jwtToken);
     }
+
 
     @GetMapping("/user")
     public ResponseEntity<userDto> getUserDetails(@AuthenticationPrincipal UserDetails userDetails) {
