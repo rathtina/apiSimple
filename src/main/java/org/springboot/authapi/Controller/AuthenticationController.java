@@ -25,7 +25,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("https://apisimpletwo.onrender.com/")
 public class AuthenticationController {
 
     @Autowired private JwtService jwtService;
