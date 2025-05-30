@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenAPIConfig {
 
-    @Bean
-    public OpenAPI customOpenAPI() {
+    @Bean(name = "swaggerOpenAPI")
+    public OpenAPI swaggerOpenAPI() {
         return new OpenAPI()
                 .info(new Info().title("API Title Example")
                         .description("API Description Example")
