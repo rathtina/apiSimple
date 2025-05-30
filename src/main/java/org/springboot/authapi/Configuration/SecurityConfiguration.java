@@ -30,11 +30,6 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth->{
                     auth.requestMatchers("/auth/**").permitAll();
                     auth.requestMatchers("/api/v1/**").permitAll();
-                    auth.requestMatchers(
-                            "/v3/api-docs/**",
-                            "/swagger-ui/**",
-                            "/swagger-ui.html"
-                    ).permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(manager->manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
