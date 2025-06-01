@@ -3,13 +3,12 @@ package org.springboot.authapi.Enities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
 
     @Id
