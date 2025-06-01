@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/api/v1")
 public class CartController {
 
     @Autowired private CartService cartService;
@@ -24,12 +24,12 @@ public class CartController {
     @Autowired
     private CartItemRepository cartItemRepository;
 
-    @GetMapping
+    @GetMapping("/listCart")
     public ResponseEntity<List<CartItemResponse>> getCartItems(@AuthenticationPrincipal User user) {
         return ResponseEntity.ok(cartService.getCartItems(user));
     }
 
-    @PostMapping
+    @PostMapping("/addCart")
     public ResponseEntity<?> addToCart(@AuthenticationPrincipal User user, @RequestBody CartItemRequest cartItemRequest) {
         CartItemResponse cartItemResponse=cartService.addToCart(user,cartItemRequest.getProductId(),cartItemRequest.getQuantity());
         return ResponseEntity.ok(Map.of("Message","Product Added Successfully","cartItem",cartItemResponse));
