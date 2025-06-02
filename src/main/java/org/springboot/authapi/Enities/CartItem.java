@@ -1,10 +1,14 @@
 package org.springboot.authapi.Enities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name="cartItem")
 public class CartItem {
     @Id
@@ -13,7 +17,7 @@ public class CartItem {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "usre_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
@@ -22,12 +26,6 @@ public class CartItem {
 
     @Column(name = "quantity")
     private Integer quantity;
-
-    public CartItem(User user, Product product, Integer quantity) {
-        this.user = user;
-        this.product = product;
-        this.quantity = quantity;
-    }
 
     public Integer getId() {
         return id;
