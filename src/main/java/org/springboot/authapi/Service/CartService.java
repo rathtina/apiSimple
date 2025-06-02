@@ -35,7 +35,7 @@ public class CartService {
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
         CartItem cartItem=cartItemRepository.findByUserAndProduct(user,product)
-                .orElseThrow(() -> new RuntimeException("CartItem not found"));
+                .orElse(new CartItem(user, product, 0));
 
         cartItem.setQuantity(cartItem.getQuantity()+quantity);
 

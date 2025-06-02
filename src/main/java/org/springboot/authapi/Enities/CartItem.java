@@ -23,6 +23,14 @@ public class CartItem {
     @Column(name = "quantity")
     private Integer quantity;
 
+    public CartItem() {}
+
+    public CartItem(User user, Product product, Integer quantity) {
+        this.user = user;
+        this.product = product;
+        this.quantity = quantity;
+    }
+
     public Integer getId() {
         return id;
     }
