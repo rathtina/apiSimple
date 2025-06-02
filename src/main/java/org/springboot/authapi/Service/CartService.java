@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CartService {
@@ -24,8 +25,7 @@ public class CartService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         List<CartItem> cartItems=cartItemRepository.findByUser(user);
-        return cartItems.stream().map(CartItemResponse::fromEntity).toList();
-
+        return cartItems.stream().map(CartItemResponse::fromEntity).collect(Collectors.toList());
     }
 
     public CartItemResponse addToCart(String email,Integer productId,Integer quantity) {
