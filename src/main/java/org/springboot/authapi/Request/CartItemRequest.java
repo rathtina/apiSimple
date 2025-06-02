@@ -7,6 +7,11 @@ public class CartItemRequest {
     private Integer productId;
     private Integer quantity;
 
+    public CartItemRequest(Integer productId, Integer quantity) {
+        this.productId = productId;
+        this.quantity = quantity;
+    }
+
     public Integer getProductId() {
         return productId;
     }
