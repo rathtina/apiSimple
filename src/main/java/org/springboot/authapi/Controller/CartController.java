@@ -46,7 +46,7 @@ public class CartController {
         String email = jwtService.extractUsername(token);
         try {
             CartItemResponse response = cartService.addToCart(email, cartItemRequest.getProductId(), cartItemRequest.getQuantity());
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(Map.of("message", "Product added to cart", "cartItem", response));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
