@@ -25,13 +25,30 @@ public class CartController {
     private CartItemRepository cartItemRepository;
 
     @GetMapping("/listCart")
-    public ResponseEntity<List<CartItemResponse>> getCartItems(@AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(cartService.getCartItems(user));
+    public ResponseEntity<List<CartItemResponse>> getCartItems(HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
+        if (authorization == null && !authorization.startsWith("Bearer ")) {
+            return ResponseEntity.status(401).build();
+        }
+        String token = authorization.substring( 7);
+        String email =jwtService.extractUsername(token);
+        return ResponseEntity.ok(cartService.getCartItems(email));
     }
 
     @PostMapping("/addCart")
-    public ResponseEntity<?> addToCart(@AuthenticationPrincipal User user, @RequestBody CartItemRequest cartItemRequest) {
-        CartItemResponse cartItemResponse=cartService.addToCart(user,cartItemRequest.getProductId(),cartItemRequest.getQuantity());
-        return ResponseEntity.ok(Map.of("Message","Product Added Successfully","cartItem",cartItemResponse));
+    public ResponseEntity<?> addToCart(HttpServletRequest request, @RequestBody CartItemRequest cartItemRequest) {
+        String authorization = request.getHeader("Authorization");
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            return ResponseEntity.status(401).body("Missing or invalid Authorization header");
+        }
+
+        String token = authorization.substring(7);
+        String email = jwtService.extractUsername(token);
+        try {
+            CartItemResponse response = cartService.addToCart(email, cartItemRequest.getProductId(), cartItemRequest.getQuantity());
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
