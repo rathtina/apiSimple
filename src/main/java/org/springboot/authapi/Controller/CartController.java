@@ -25,7 +25,7 @@ public class CartController {
     @GetMapping("/listCart")
     public ResponseEntity<List<CartItemResponse>> getCartItems(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
-        if (authorization == null && !authorization.startsWith("Bearer ")) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
             return ResponseEntity.status(401).build();
         }
         String token = authorization.substring( 7);
