@@ -36,7 +36,7 @@ public class CartService {
 
     public List<CartItemResponseDTO> getCartItems(String authHeader){
         User user=extractUserFromToken(authHeader);
-        List<CartItem> cartItems=cartItemRepository.findByUserId(user);
+        List<CartItem> cartItems=cartItemRepository.findByUser(user);
         return cartItems.stream().map(CartItemResponseDTO::new).collect(Collectors.toList());
     }
 
