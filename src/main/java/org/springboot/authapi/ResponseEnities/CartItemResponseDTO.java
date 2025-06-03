@@ -6,7 +6,7 @@ import org.springboot.authapi.Enities.CartItem;
 @Data
 public class CartItemResponseDTO {
     private Long id;
-    private int productId;
+    private Integer productId;
     private String productName;
     private Integer quantity;
 
@@ -25,11 +25,11 @@ public class CartItemResponseDTO {
         this.id = id;
     }
 
-    public int getProductId() {
+    public Integer getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(Integer productId) {
         this.productId = productId;
     }
 

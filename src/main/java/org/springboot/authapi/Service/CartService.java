@@ -41,7 +41,7 @@ public class CartService {
     }
 
 
-    public String addToCart(String authHeader, int productId,int quantity){
+    public String addToCart(String authHeader, Integer productId,Integer quantity){
         User user=extractUserFromToken(authHeader);
         Product product=productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
