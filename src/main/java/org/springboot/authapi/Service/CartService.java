@@ -29,15 +29,13 @@ public class CartService {
             throw new RuntimeException("Missing or invalid Authorization header");
         }
         String token = authHeader.substring(7);
-        String email=jwtService.extractUsername(token);
-        return  userRepository.findByEmail(email)
-                .orElseThrow(()-> new RuntimeException("UserEmail Not Found"));
+        String username=jwtService.extractUsername(token);
+        return  userRepository.findByUsername(username);
     }
 
-    public List<CartItemResponseDTO> getCartItems(String authHeader) {
-        User user = extractUserFromToken(authHeader);
-        System.out.println("Extracted user ID: " + user.getId());
-        List<CartItem> cartItems = cartItemRepository.findByUserId(user.getId());
+    public List<CartItemResponseDTO> getCartItems(String authHeader){
+        User user=extractUserFromToken(authHeader);
+        List<CartItem> cartItems=cartItemRepository.findByUser(user);
         return cartItems.stream().map(CartItemResponseDTO::new).collect(Collectors.toList());
     }
 
