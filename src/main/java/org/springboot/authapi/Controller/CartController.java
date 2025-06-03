@@ -1,6 +1,7 @@
 package org.springboot.authapi.Controller;
 
 import org.springboot.authapi.Enities.CartItem;
+import org.springboot.authapi.ResponseEnities.CartItemResponseDTO;
 import org.springboot.authapi.Service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class CartController {
     @Autowired private CartService cartService;
 
     @GetMapping("/getCart")
-    public ResponseEntity<List<CartItem>> getCart(@RequestHeader("Authorization") String authHeader) {
+    public ResponseEntity<List<CartItemResponseDTO>> getCart(@RequestHeader("Authorization") String authHeader) {
         return ResponseEntity.ok(cartService.getCartItems(authHeader));
     }
 

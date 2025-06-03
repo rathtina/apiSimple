@@ -6,10 +6,12 @@ import org.springboot.authapi.Enities.User;
 import org.springboot.authapi.Repository.CartItemRepository;
 import org.springboot.authapi.Repository.ProductRepository;
 import org.springboot.authapi.Repository.UserRepository;
+import org.springboot.authapi.ResponseEnities.CartItemResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CartService {
@@ -32,9 +34,10 @@ public class CartService {
                 .orElseThrow(()-> new RuntimeException("UserEmail Not Found"));
     }
 
-    public List<CartItem> getCartItems(String authHeader){
+    public List<CartItemResponseDTO> getCartItems(String authHeader){
         User user=extractUserFromToken(authHeader);
-        return cartItemRepository.findByUser(user);
+        List<CartItem> cartItems=cartItemRepository.findByUser(user);
+        return cartItems.stream().map(CartItemResponseDTO::new).collect(Collectors.toList());
     }
 
 
