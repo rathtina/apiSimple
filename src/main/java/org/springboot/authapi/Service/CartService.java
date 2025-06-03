@@ -24,13 +24,23 @@ public class CartService {
 
     @Autowired private CartItemRepository cartItemRepository;
 
-    private User extractUserFromToken(String authHeader){
-        if (authHeader ==null || !authHeader.startsWith("Bearer ")){
+    private User extractUserFromToken(String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             throw new RuntimeException("Missing or invalid Authorization header");
         }
+
         String token = authHeader.substring(7);
-        String username=jwtService.extractUsername(token);
-        return  userRepository.findByUsername(username);
+        String username = jwtService.extractUsername(token);
+
+        System.out.println("Username from token: " + username);
+
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new RuntimeException("User not found with username: " + username);
+        }
+
+        System.out.println("User ID: " + user.getId());
+        return user;
     }
 
     public List<CartItemResponseDTO> getCartItems(String authHeader){
