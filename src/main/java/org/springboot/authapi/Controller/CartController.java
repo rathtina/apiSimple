@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/api/v1")
+@CrossOrigin("*")
 public class CartController {
 
     @Autowired private CartService cartService;
@@ -19,7 +20,7 @@ public class CartController {
         return ResponseEntity.ok(cartService.getCartItems(authHeader));
     }
 
-    @PostMapping("/add")
+    @PostMapping("/addCart")
     public ResponseEntity<?> addToCart(
             @RequestHeader("Authorization") String authHeader,
             @RequestParam int productId,
