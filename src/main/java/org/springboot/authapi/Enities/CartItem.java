@@ -5,12 +5,12 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="cartItem")
+@Table(name = "cart_item")
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -23,17 +23,18 @@ public class CartItem {
     @Column(name = "quantity")
     private Integer quantity;
 
-    public CartItem(User user, Product product, Integer quantity) {
+    public CartItem(Long id, User user, Product product, Integer quantity) {
+        this.id = id;
         this.user = user;
         this.product = product;
         this.quantity = quantity;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
