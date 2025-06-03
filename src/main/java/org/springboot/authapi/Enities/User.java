@@ -20,7 +20,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "fullName", nullable = false)
     private String fullName;
@@ -98,13 +98,13 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
+//    public String getFullName() {
+//        return fullName;
+//    }
+//
+//    public String getEmail() {
+//        return email;
+//    }
 }
 
 //-----------------------------------1----------------------------------------------
