@@ -30,17 +30,9 @@ public class CartService {
         }
 
         String token = authHeader.substring(7);
-        String username = jwtService.extractUsername(token);
+        String email = jwtService.extractUsername(token);
 
-        System.out.println("Username from token: " + username);
-
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new RuntimeException("User not found with username: " + username);
-        }
-
-        System.out.println("User ID: " + user.getId());
-        return user;
+        return userRepository.findByEmail(email).orElseThrow(()->new RuntimeException("User Not Found"));
     }
 
     public List<CartItemResponseDTO> getCartItems(String authHeader){
