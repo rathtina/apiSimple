@@ -30,24 +30,16 @@ public class CartService {
         }
 
         String token = authHeader.substring(7);
-        String username = jwtService.extractUsername(token); // this is 'username', not 'email'
+        String email = jwtService.extractUsername(token);
 
-        System.out.println("🔑 Extracted Username from Token: " + username);
-
-        return userRepository.findByUsername(username);
+        return userRepository.findByEmail(email).orElseThrow(()->new RuntimeException("User Not Found"));
     }
 
     public List<CartItemResponseDTO> getCartItems(String authHeader){
-        User user = extractUserFromToken(authHeader);
-        System.out.println("🧑 Authenticated user ID: " + user.getId());
-
-        List<CartItem> cartItems = cartItemRepository.findByUserId(user.getId());
-        System.out.println("🛒 Cart size: " + cartItems.size());
-
+        User user=extractUserFromToken(authHeader);
+        List<CartItem> cartItems=cartItemRepository.findByUserId(user.getId());
         return cartItems.stream().map(CartItemResponseDTO::new).collect(Collectors.toList());
     }
-
-
 
     public String addToCart(String authHeader, Integer productId,Integer quantity){
         User user=extractUserFromToken(authHeader);

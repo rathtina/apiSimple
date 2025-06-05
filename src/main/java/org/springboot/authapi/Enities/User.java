@@ -16,7 +16,6 @@ import java.util.List;
 @Table(name = "auth_user")
 public class User implements UserDetails {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -98,13 +97,17 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-//    public String getFullName() {
-//        return fullName;
-//    }
-//
-//    public String getEmail() {
-//        return email;
-//    }
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Integer getId() {
+        return id;
+    }
 }
 
 //-----------------------------------1----------------------------------------------
