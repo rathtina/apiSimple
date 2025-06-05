@@ -8,9 +8,13 @@ import org.springboot.authapi.Repository.ProductRepository;
 import org.springboot.authapi.Repository.UserRepository;
 import org.springboot.authapi.ResponseEnities.CartItemResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,10 +39,14 @@ public class CartService {
         return userRepository.findByEmail(email).orElseThrow(()->new RuntimeException("User Not Found"));
     }
 
-    public List<CartItemResponseDTO> getCartItems(String authHeader){
+    public ResponseEntity<List<CartItemResponseDTO>> getCartItems(String authHeader){
         User user=extractUserFromToken(authHeader);
-        List<CartItem> cartItems=cartItemRepository.findByUserId(user.getId());
-        return cartItems.stream().map(CartItemResponseDTO::new).collect(Collectors.toList());
+        Optional<User> userId=userRepository.findById(user.getId());
+        if(userId.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        List<CartItem> cartItems=cartItemRepository.findByUser(userId.get());
+        return ResponseEntity.ok(cartItems.stream().map(CartItemResponseDTO::new).collect(Collectors.toList()));
     }
 
     public String addToCart(String authHeader, Integer productId,Integer quantity){

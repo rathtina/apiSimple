@@ -17,8 +17,8 @@ public class CartController {
     @Autowired private CartService cartService;
 
     @GetMapping("/getCart")
-    public ResponseEntity<List<CartItemResponseDTO>> getCart(@RequestHeader("Authorization") String authHeader) {
-        return ResponseEntity.ok(cartService.getCartItems(authHeader));
+    public ResponseEntity <List<CartItemResponseDTO>> getCart(@RequestHeader("Authorization") String authHeader) {
+        return cartService.getCartItems(authHeader);
     }
 
     @PostMapping("/addCart")
