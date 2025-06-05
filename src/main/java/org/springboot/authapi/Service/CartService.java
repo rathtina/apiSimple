@@ -39,15 +39,22 @@ public class CartService {
         return userRepository.findByEmail(email).orElseThrow(()->new RuntimeException("User Not Found"));
     }
 
-    public ResponseEntity<List<CartItemResponseDTO>> getCartItems(String authHeader){
-        User user=extractUserFromToken(authHeader);
-        Optional<User> userId=userRepository.findById(user.getId());
-        if(userId.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public ResponseEntity<List<CartItemResponseDTO>> getCartItems(String authHeader) {
+        User user = extractUserFromToken(authHeader);
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        List<CartItem> cartItems=cartItemRepository.findByUser(userId.get());
-        return ResponseEntity.ok(cartItems.stream().map(CartItemResponseDTO::new).collect(Collectors.toList()));
+
+        List<CartItem> cartItems = cartItemRepository.findByUser(user);
+
+        List<CartItemResponseDTO> response = cartItems.stream()
+                .map(CartItemResponseDTO::new)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(response);
     }
+
 
     public String addToCart(String authHeader, Integer productId,Integer quantity){
         User user=extractUserFromToken(authHeader);
